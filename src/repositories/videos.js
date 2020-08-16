@@ -20,8 +20,8 @@ function create(objetoDoVideo) {
     });
 }
 
-function deleteVideo(objetoDoVideo) {+
-  console.log('chamando aqui', objetoDoVideo );
+function deleteVideo(objetoDoVideo) {
+ // console.log('chamando aqui', objetoDoVideo );
   return fetch(`http://localhost:8080/videos/${objetoDoVideo.id}`, {  
     method: 'DELETE',
      headers: {

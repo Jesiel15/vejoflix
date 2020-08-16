@@ -57,7 +57,7 @@ function DeleteVideo() {
                                     history.push('/');
                                 });
                             }else{
-                                console.log('deu ruim', values.url, values.categoria),
+                                console.log('deu ruim', values.url, values.categoria)
                                
                             }
                         })

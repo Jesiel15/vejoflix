@@ -171,12 +171,6 @@
     },
     {
       "titulo": "Video padrão",
-      "url": "https://www.youtube.com/watch?v=jOAU81jdi-c",
-      "categoriaId": 1,
-      "id": 25
-    },
-    {
-      "titulo": "Video padrão",
       "url": "https://www.youtube.com/watch?v=34uHo7hFmG0",
       "categoriaId": 1,
       "id": 26
@@ -192,6 +186,12 @@
       "url": "https://www.youtube.com/watch?v=frD_IiY_A3E",
       "categoriaId": 4,
       "id": 28
+    },
+    {
+      "titulo": "Video padrão",
+      "url": "https://www.youtube.com/watch?v=jOAU81jdi-c",
+      "categoriaId": 1,
+      "id": 29
     }
   ]
 }
