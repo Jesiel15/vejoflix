@@ -80,12 +80,6 @@
       "url": "https://www.youtube.com/watch?v=Uh-GNH-t89w"
     },
     {
-      "id": 7,
-      "categoriaId": 1,
-      "titulo": "Novidades do Angular v9",
-      "url": "https://www.youtube.com/watch?v=34uHo7hFmG0"
-    },
-    {
       "id": 8,
       "categoriaId": 2,
       "titulo": "PERCURSO em NÍVEL em ÁRVORE BINÁRIA | Estruturas de Dados #14",
@@ -140,22 +134,10 @@
       "url": "https://www.youtube.com/watch?v=gxyjGmOV540"
     },
     {
-      "id": 17,
-      "categoriaId": 4,
-      "titulo": "Interestellar",
-      "url": "https://www.youtube.com/watch?v=frD_IiY_A3E"
-    },
-    {
       "id": 18,
       "categoriaId": 4,
       "titulo": "Gattaca",
       "url": "https://www.youtube.com/watch?v=Dl0tYLbrhhs"
-    },
-    {
-      "id": 19,
-      "categoriaId": 4,
-      "titulo": "A Chegada",
-      "url": "https://www.youtube.com/watch?v=rNciXGzYZms"
     },
     {
       "id": 20,
@@ -192,6 +174,24 @@
       "url": "https://www.youtube.com/watch?v=jOAU81jdi-c",
       "categoriaId": 1,
       "id": 25
+    },
+    {
+      "titulo": "Video padrão",
+      "url": "https://www.youtube.com/watch?v=34uHo7hFmG0",
+      "categoriaId": 1,
+      "id": 26
+    },
+    {
+      "titulo": "Interestelar - Trailer Legendado",
+      "url": "https://www.youtube.com/watch?v=rNciXGzYZms",
+      "categoriaId": 4,
+      "id": 27
+    },
+    {
+      "titulo": "Video padrão",
+      "url": "https://www.youtube.com/watch?v=frD_IiY_A3E",
+      "categoriaId": 4,
+      "id": 28
     }
   ]
 }
