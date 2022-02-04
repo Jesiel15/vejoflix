@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import useForm from '../../../hooks/useForm';
 import FormField from '../../../components/FormField';
 import Button from '../../../components/Button';
 import videosRepository from '../../../repositories/videos';
 import categoriasRepository from '../../../repositories/categorias';
+import { show } from 'node-snackbar';
+
 
 function DeleteVideo() {
     const history = useHistory();
@@ -19,11 +21,14 @@ function DeleteVideo() {
 
     useEffect(() => {
         categoriasRepository
-          .getAll()
-          .then((categoriasFromServer) => {
-            setCategorias(categoriasFromServer);
-          });
-      }, []);
+            .getAll()
+            .then((categoriasFromServer) => {
+                setCategorias(categoriasFromServer);
+            });
+    }, []);
+
+
+
 
     return (
         <PageDefault>
@@ -32,41 +37,43 @@ function DeleteVideo() {
             <form onSubmit={(event) => {
                 event.preventDefault();
                 // alert('Video Cadastrado com sucesso!!!1!');
-                const categoriaEscolhida = categorias.find((categoria) => {
-                    return categoria.titulo === values.categoria;
+                // const categoriaEscolhida = categorias.find((categoria) => {
+                //     return categoria.titulo === values.categoria;
 
-                });
+                // });
 
                 categoriasRepository.getAllWithVideos()
-                .then((categoriasComVideos) => {
-                     
-                    categoriasComVideos.forEach(categoria => {
-                       
-                        categoria.videos.forEach(video => {
-                        
-                            if (
-                                video.url === values.url && categoria.titulo === values.categoria  
-                            ){
-                                //acha o id do video pela url e titulo
-                                //console.log('achei o id:',video.id);
-                                videosRepository.deleteVideo({
-                                    id: video.id,
-                                })
-                                .then(() => {
-                                    console.log('Deletou com sucesso!');
-                                    history.push('/');
-                                });
-                            }else{
-                                console.log('deu ruim', values.url, values.categoria)
-                               
-                            }
-                        })
+                    .then((categoriasComVideos) => {
+
+                        categoriasComVideos.forEach(categoria => {
+
+                            categoria.videos.forEach(video => {
+
+                                if (
+                                    video.url === values.url && categoria.titulo === values.categoria
+                                ) {
+                                    //acha o id do video pela url e titulo
+                                    //console.log('achei o id:',video.id);
+                                    videosRepository.deleteVideo({
+                                        id: video.id,
+                                    })
+                                        .then(() => {
+                                            console.log('Deletou com sucesso!');
+                                            history.push('/');
+
+                                        });
+                                } else {
+                                    console.log('deu ruim', values.url, values.categoria)
+                                    show('test');
+
+                                }
+                            })
+                        });
+                    })
+                    .catch((err) => {
+                        console.log(err.message);
                     });
-                })
-                .catch((err) => {
-                    console.log(err.message);
-                });     
-                    
+
             }}
             >
                 <FormField
@@ -91,5 +98,4 @@ function DeleteVideo() {
         </PageDefault>
     );
 }
-
 export default DeleteVideo;
