@@ -13,7 +13,7 @@ function CadastroVideo() {
   const categoryTitles = categorias.map(({ titulo }) => titulo);
   const { handleChange, values } = useForm({
     titulo: 'Video padrão',
-    url: 'https://www.youtube.com/watch?v=jOAU81jdi-c',
+    url: 'https://www.youtube.com/watch?v=Bh1398ddGDw',
     categoria: 'Front End',
   });
 
@@ -83,10 +83,10 @@ function CadastroVideo() {
       </Link> 
 
       <br/>
-
+{/* 
       <Link to="/delete/Video">
         Deletar um video
-      </Link>
+      </Link> */}
 
     </PageDefault>
   );
