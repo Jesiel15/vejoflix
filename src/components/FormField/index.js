@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import React from "react";
+import PropTypes from "prop-types";
+import styled, { css } from "styled-components";
 
 const FormFieldWrapper = styled.div`
-  position: relative; 
+  position: relative;
   textarea {
     min-height: 150px;
   }
@@ -13,109 +13,145 @@ const FormFieldWrapper = styled.div`
 `;
 
 const Label = styled.label``;
+
 Label.Text = styled.span`
-  color: #E5E5E5;
+  color: #e5e5e5;
   height: 57px;
-  position: absolute; 
+  position: absolute;
   top: 0;
   left: 16px;
-  
   display: flex;
   align-items: center;
-  
   transform-origin: 0% 0%;
   font-size: 18px;
   font-style: normal;
   font-weight: 300;
-  
-  transition: .1s ease-in-out;
+  transition: 0.1s ease-in-out;
 `;
 
 const Input = styled.input`
-  background: #53585D;
-  color: #F5F5F5;
+  background: #53585d;
+  color: #f5f5f5;
   display: block;
   width: 100%;
   height: 57px;
   font-size: 18px;
-  
   outline: 0;
   border: 0;
   border-top: 4px solid transparent;
-  border-bottom: 4px solid #53585D;
-  
+  border-bottom: 4px solid #53585d;
   padding: 16px 16px;
   margin-bottom: 45px;
-  
   resize: none;
   border-radius: 4px;
-  transition: border-color .3s;
-  
+  transition: border-color 0.3s;
+
   &:focus {
     border-bottom-color: var(--primary);
   }
   &:focus:not([type="color"]) + span {
-    transform: scale(.6) translateY(-10px);
+    transform: scale(0.6) translateY(-10px);
   }
-  ${({ hasValue }) => hasValue && css`
-    &:not([type="color"]) + span {
-      transform: scale(.6) translateY(-10px);
-    }
-  `}
+
+  ${({ hasValue }) =>
+    hasValue &&
+    css`
+      &:not([type="color"]) + span {
+        transform: scale(0.6) translateY(-10px);
+      }
+    `}
 `;
 
-function FormField({
-  label, type, name, value, onChange, suggestions,
-}) {
-  const fieldId = `id_${name}`;
-  const isTypeTextarea = type === 'textarea';
-  const tag = isTypeTextarea ? 'textarea' : 'input';
+const Select = styled.select`
+  background: #53585d;
+  color: #f5f5f5;
+  display: block;
+  width: 100%;
+  height: 59px;
+  font-size: 18px;
+  outline: 0;
+  border: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid #53585d;
+  padding: 16px 40px 16px 16px;
+  margin-bottom: 45px;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23f5f5f5' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+
+  &:focus {
+    border-bottom-color: var(--primary);
+  }
+
+  ${({ hasValue }) =>
+    hasValue &&
+    css`
+      + span {
+        transform: scale(0.6) translateY(-10px);
+      }
+    `}
+`;
+
+
+function FormField({ label, type, name, value, onChange, suggestions }) {
+  const fieldId = `id_${name}`;
   const hasValue = Boolean(value.length);
-  const hasSuggestions = Boolean(suggestions.length);
 
   return (
     <FormFieldWrapper>
-      <Label
-        htmlFor={fieldId}
-      >
-        <Input
-          as={tag}
-          id={fieldId}
-          type={type}
-          value={value}
-          name={name}
-          hasValue={hasValue}
-          onChange={onChange}
-          autoComplete={hasSuggestions ? 'off' : 'on'}
-          list={hasSuggestions ? `suggestionFor_${fieldId}` : undefined}
-        />
-        <Label.Text>
-          {label}
-          :
-        </Label.Text>
-        {
-          hasSuggestions && (
-            <datalist id={`suggestionFor_${fieldId}`}>
-              {
-              suggestions.map((suggestion) => (
-                <option value={suggestion} key={`suggestionFor_${fieldId}_option${suggestion}`}>
-                  {suggestion}
-                </option>
-              ))
-            }
-            </datalist>
-          )
-        }
-
+      <Label htmlFor={fieldId}>
+        {type === "select" ? (
+          <Select
+            id={fieldId}
+            name={name}
+            value={value}
+            onChange={onChange}
+            hasValue={hasValue}
+          >
+            {suggestions.map((suggestion) => (
+              <option key={`option-${suggestion}`} value={suggestion}>
+                {suggestion}
+              </option>
+            ))}
+          </Select>
+        ) : (
+          <>
+            <Input
+              as={type === "textarea" ? "textarea" : "input"}
+              id={fieldId}
+              type={type}
+              value={value}
+              name={name}
+              hasValue={hasValue}
+              onChange={onChange}
+              autoComplete={suggestions.length ? "off" : "on"}
+              list={suggestions.length ? `suggestionFor_${fieldId}` : undefined}
+            />
+            {suggestions.length > 0 && (
+              <datalist id={`suggestionFor_${fieldId}`}>
+                {suggestions.map((suggestion) => (
+                  <option value={suggestion} key={`suggestion-${suggestion}`} />
+                ))}
+              </datalist>
+            )}
+          </>
+        )}
+        <Label.Text>{label}:</Label.Text>
       </Label>
     </FormFieldWrapper>
   );
 }
 
 FormField.defaultProps = {
-  type: 'text',
-  value: '',
+  type: "text",
+  value: "",
   onChange: () => {},
   suggestions: [],
 };
