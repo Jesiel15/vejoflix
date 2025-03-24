@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Versão node
+
+14.21.3 (Currently using 64-bit executable)
+
 ## Available Scripts
 
 In the project directory, you can run:
