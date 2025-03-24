@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import PageDefault from '../../../components/PageDefault';
-import FormField from '../../../components/FormField';
-import Button from '../../../components/Button';
-import useForm from '../../../hooks/useForm.js';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import PageDefault from "../../../components/PageDefault";
+import FormField from "../../../components/FormField";
+import Button from "../../../components/Button";
+import useForm from "../../../hooks/useForm.js";
 
 function CadastroCategoria() {
   const valoresIniciais = {
-    nome: '',
-    descricao: '',
-    cor: '',
+    nome: "",
+    descricao: "",
+    cor: "",
   };
 
   const { handleChange, values, clearForm } = useForm(valoresIniciais);
@@ -17,17 +17,14 @@ function CadastroCategoria() {
   const [categorias, setCategorias] = useState([]);
 
   useEffect(() => {
-    const URL_TOP = window.location.hostname.includes('localhost')
-      ? 'http://localhost:8080/categorias'
-      : 'https://vejoflix.herokuapp.com/categorias';
-    
-    fetch(URL_TOP)
-      .then(async (respostaDoServidor) => {
-        const resposta = await respostaDoServidor.json();
-        setCategorias([
-          ...resposta,
-        ]);
-      });
+    const URL_TOP = window.location.hostname.includes("localhost")
+      ? "http://localhost:8080/categorias"
+      : "https://vejoflix.herokuapp.com/categorias";
+
+    fetch(URL_TOP).then(async (respostaDoServidor) => {
+      const resposta = await respostaDoServidor.json();
+      setCategorias([...resposta]);
+    });
 
     // setTimeout(() => {
     //   setCategorias([
@@ -55,17 +52,44 @@ function CadastroCategoria() {
         {values.nome}
       </h1>
 
-      <form onSubmit={function handleSubmit(infosDoEvento) {
-        infosDoEvento.preventDefault();
-        setCategorias([
-          ...categorias,
-          values,
-        ]);
+      <form
+        onSubmit={function handleSubmit(infosDoEvento) {
+          infosDoEvento.preventDefault();
 
-        clearForm();
-      }}
+          const novaCategoria = {
+            id: categorias.length + 1, // ou deixe o backend gerar
+            titulo: values.nome,
+            descricao: values.descricao,
+            cor: values.cor,
+            link_extra: {
+              text: "",
+              url: "",
+            },
+          };
+
+          const URL_TOP = window.location.hostname.includes("localhost")
+            ? "http://localhost:8080/categorias"
+            : "https://vejoflix.herokuapp.com/categorias";
+
+          fetch(URL_TOP, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(novaCategoria),
+          }).then(async (respostaDoServidor) => {
+            if (respostaDoServidor.ok) {
+              const categoriaCriada = await respostaDoServidor.json();
+
+              setCategorias([...categorias, categoriaCriada]);
+
+              clearForm();
+            } else {
+              alert("Erro ao cadastrar categoria!");
+            }
+          });
+        }}
       >
-
         <FormField
           label="Nome da Categoria"
           name="nome"
@@ -89,9 +113,7 @@ function CadastroCategoria() {
           onChange={handleChange}
         />
 
-        <Button>
-          Cadastrar
-        </Button>
+        <Button>Cadastrar</Button>
       </form>
 
       {categorias.length === 0 && (
@@ -102,16 +124,12 @@ function CadastroCategoria() {
       )}
 
       <ul>
-        {categorias.map((categoria) => (
-          <li key={`${categoria.titulo}`}>
-            {categoria.titulo}
-          </li>
+        {categorias.map((categoria, index) => (
+          <li key={`${categoria.titulo}-${index}`}>{categoria.titulo}</li>
         ))}
       </ul>
 
-      <Link to="/">
-        Ir para home
-      </Link>
+      <Link to="/">Ir para home</Link>
     </PageDefault>
   );
 }

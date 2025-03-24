@@ -29,7 +29,7 @@
     },
     {
       "id": 4,
-      "titulo": "Filmes",
+      "titulo": "Músicas e tutoriais",
       "cor": "orange"
     },
     {
@@ -40,15 +40,186 @@
         "text": "",
         "url": ""
       }
+    },
+    {
+      "id": 6,
+      "titulo": "Outros",
+      "descricao": "Videos aleatórios",
+      "cor": "#8f14d2",
+      "link_extra": {
+        "text": "",
+        "url": ""
+      }
     }
   ],
   "videos": [
     {
       "id": 1,
       "categoriaId": 1,
-      "titulo": "Playlist",
-      "url": "https://www.youtube.com/watch?v=Bh1398ddGDw"
+      "titulo": "",
+      "url": "https://www.youtube.com/watch?v=wsTv9y931o8"
+    },
+    {
+      "titulo": "Video padrão",
+      "url": "https://www.youtube.com/watch?v=1N_YcMqtRww",
+      "categoriaId": 1,
+      "id": 7
+    },
+    {
+      "titulo": "Video padrão",
+      "url": "https://www.youtube.  com/watch?v=FRiz1sx0a64",
+      "categoriaId": 1,
+      "id": 8
+    },
+    {
+      "titulo": "Video padrão",
+      "url": "https://www.youtube.com/watch?v=8D_a9wr8yMA",
+      "categoriaId": 1,
+      "id": 9
+    },
+    {
+      "titulo": "CSS Isometric Menu Hover Effects",
+      "url": "https://www.youtube.com/watch?v=MmdKeypSxE8&list=PLtdxfWAD3QeC6XEuvxNCDIQ3YzraXH18d",
+      "categoriaId": 1,
+      "id": 10
+    },
+    {
+      "titulo": "Learn CSS Border Animations in 6 Minutes",
+      "url": "https://www.youtube.com/watch?v=ezP4kbOvs_E",
+      "categoriaId": 1,
+      "id": 11
+    },
+    {
+      "titulo": "Learn CSS ::before and ::after in 4 Minutes",
+      "url": "https://www.youtube.com/watch?v=dIUOWdwwZBw",
+      "categoriaId": 1,
+      "id": 12
+    },
+    {
+      "titulo": "Portfólio",
+      "url": "https://www.youtube.com/watch?v=d8MReiqqElE",
+      "categoriaId": 6,
+      "id": 13
+    },
+    {
+      "titulo": "Video padrão",
+      "url": "https://www.youtube.com/watch?v=LNhslFddZ-k",
+      "categoriaId": 2,
+      "id": 14
+    },
+    {
+      "titulo": "Video padrão",
+      "url": "https://www.youtube.com/watch?v=wXMlMsDvk2M",
+      "categoriaId": 2,
+      "id": 15
+    },
+    {
+      "titulo": "Video padrão",
+      "url": "https://www.youtube.com/watch?v=6d84jehVhog",
+      "categoriaId": 2,
+      "id": 16
+    },
+    {
+      "titulo": "Video padrão",
+      "url": "https://www.youtube.com/watch?v=hHM-hr9q4mo&t=27s",
+      "categoriaId": 2,
+      "id": 17
+    },
+    {
+      "titulo": "Video padrão",
+      "url": "https://www.youtube.com/watch?v=LLqq6FemMNQ&list=PLJ_KhUnlXUPtbtLwaxxUxHqvcNQndmI4B",
+      "categoriaId": 2,
+      "id": 18
+    },
+    {
+      "titulo": "Video padrão",
+      "url": "https://www.youtube.com/watch?v=4gc_PuCg3R0&list=PLH8edgEd8YTkXH4dMY66A7Xg64-_5BPZS",
+      "categoriaId": 2,
+      "id": 19
+    },
+    {
+      "titulo": "Trilha de Data Science e AI",
+      "url": "https://www.youtube.com/watch?v=ovVLyGf-HNM",
+      "categoriaId": 3,
+      "id": 20
+    },
+    {
+      "titulo": "Video padrão",
+      "url": "https://www.youtube.com/watch?v=xN15qDfmJgU",
+      "categoriaId": 3,
+      "id": 21
+    },
+    {
+      "titulo": "Pós-Graduação Analytics e Inteligência Artificial – Data Science",
+      "url": "https://www.youtube.com/watch?v=fpm7Xk5Fy7I",
+      "categoriaId": 3,
+      "id": 22
+    },
+    {
+      "titulo": "Horizon Zero Dawn - Trailer de lançamento | PS4",
+      "url": "https://www.youtube.com/watch?v=9axpikOIHEo",
+      "categoriaId": 5,
+      "id": 23
+    },
+    {
+      "titulo": "ARK: Survival Ascended Launch Trailer",
+      "url": "https://www.youtube.com/watch?v=0gLODoXanog",
+      "categoriaId": 1,
+      "id": 24
+    },
+    {
+      "titulo": "Super Mario Bros. Wonder - Nintendo Direct 6.21.2023",
+      "url": "https://www.youtube.com/watch?v=JStAYvbeSHc",
+      "categoriaId": 5,
+      "id": 25
+    },
+    {
+      "titulo": "The Legend of Zelda: Breath of the Wild - Official Game Trailer - Nintendo E3 2016",
+      "url": "https://www.youtube.com/watch?v=1rPxiXXxftE",
+      "categoriaId": 5,
+      "id": 26
+    },
+    {
+      "titulo": "The Legend of Zelda: Tears of the Kingdom – Official Trailer #3",
+      "url": "https://www.youtube.com/watch?v=uHGShqcAHlQ",
+      "categoriaId": 5,
+      "id": 27
+    },
+    {
+      "titulo": "Valheim - Official Early Access Launch Traile",
+      "url": "https://www.youtube.com/watch?v=liQLtCLq3tc",
+      "categoriaId": 5,
+      "id": 28
+    },
+    {
+      "titulo": "Ed Sheeran - Lego House [Official Music Video]",
+      "url": "https://www.youtube.com/watch?v=c4BLVznuWnU",
+      "categoriaId": 4,
+      "id": 29
+    },
+    {
+      "titulo": "Thằng Điên - Justatee x Phương Ly | Piano Cover",
+      "url": "https://www.youtube.com/watch?v=yBiW708dDLI",
+      "categoriaId": 4,
+      "id": 30
+    },
+    {
+      "titulo": "The SPHERES Collection | 4 Original Compositions \\\\ Relaxing Piano [17min]",
+      "url": "https://www.youtube.com/watch?v=iKRZ9j9leZw",
+      "categoriaId": 4,
+      "id": 31
+    },
+    {
+      "titulo": "Virginio Aiello, On Piano - Van Gogh",
+      "url": "https://www.youtube.com/watch?v=l-fxH--8LFI&list=RDl-fxH--8LFI&start_radio=1&rv=iKRZ9j9leZw",
+      "categoriaId": 4,
+      "id": 32
+    },
+    {
+      "titulo": "APIs Explained (in 4 Minutes)",
+      "url": "https://www.youtube.com/watch?v=bxuYDT-BWaI",
+      "categoriaId": 6,
+      "id": 33
     }
-   
   ]
 }
