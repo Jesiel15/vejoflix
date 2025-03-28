@@ -2,7 +2,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Versão node
 
-14.21.3 (Currently using 64-bit executable)
+Old: 14.21.3 (Currently using 64-bit executable)
+New: 18.12.1
 
 ## Available Scripts
 
