@@ -19,7 +19,7 @@ function CadastroCategoria() {
   useEffect(() => {
     const URL_TOP = window.location.hostname.includes("localhost")
       ? "http://localhost:8080/categorias"
-      : "http://ec2-3-18-102-247.us-east-2.compute.amazonaws.com:8082/categorias";
+      : "https://ec2-3-18-102-247.us-east-2.compute.amazonaws.com:443/categorias";
 
     fetch(URL_TOP).then(async (respostaDoServidor) => {
       const resposta = await respostaDoServidor.json();
@@ -69,7 +69,7 @@ function CadastroCategoria() {
 
           const URL_TOP = window.location.hostname.includes("localhost")
             ? "http://localhost:8082"
-            : "http://ec2-3-18-102-247.us-east-2.compute.amazonaws.com:8082";
+            : "https://ec2-3-18-102-247.us-east-2.compute.amazonaws.com:443";
 
           fetch(URL_TOP, {
             method: "POST",

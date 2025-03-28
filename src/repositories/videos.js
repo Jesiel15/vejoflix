@@ -21,7 +21,7 @@ function create(objetoDoVideo) {
 
 function deleteVideo(objetoDoVideo) {
   return fetch(
-    `http://ec2-3-18-102-247.us-east-2.compute.amazonaws.com:8082/videos/${objetoDoVideo.id}`,
+    `https://ec2-3-18-102-247.us-east-2.compute.amazonaws.com:443/videos/${objetoDoVideo.id}`,
     {
       method: "DELETE",
       headers: {
