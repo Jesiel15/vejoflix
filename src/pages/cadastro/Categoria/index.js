@@ -69,7 +69,7 @@ function CadastroCategoria() {
 
           const URL_TOP = window.location.hostname.includes("localhost")
             ? "http://localhost:8082"
-            : "http://localhost:8082";
+            : "http://ec2-3-18-102-247.us-east-2.compute.amazonaws.com:8082";
 
           fetch(URL_TOP, {
             method: "POST",
