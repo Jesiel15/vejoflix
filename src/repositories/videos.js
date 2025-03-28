@@ -19,6 +19,7 @@ function create(objetoDoVideo) {
   });
 }
 
+// TODO: uma futura correção, excluir apenas um video e não todos que estão listado com meu link
 function deleteVideo(objetoDoVideo) {
   return fetch(
     `https://ec2-3-18-102-247.us-east-2.compute.amazonaws.com:443/videos/${objetoDoVideo.id}`,
