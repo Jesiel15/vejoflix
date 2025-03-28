@@ -57,7 +57,7 @@
       "id": 1,
       "categoriaId": 1,
       "titulo": "",
-      "url": "https://www.youtube.com/watch?v=wsTv9y931o8"
+      "url": "https://www.youtube.com/watch?v=LLqq6FemMNQ&list=PLJ_KhUnlXUPtbtLwaxxUxHqvcNQndmI4B"
     },
     {
       "titulo": "Video padrão",
@@ -126,7 +126,7 @@
       "id": 17
     },
     {
-      "titulo": "Video padrão",
+      "titulo": "Curso de Node.JS - O que é Node.JS #01",
       "url": "https://www.youtube.com/watch?v=LLqq6FemMNQ&list=PLJ_KhUnlXUPtbtLwaxxUxHqvcNQndmI4B",
       "categoriaId": 2,
       "id": 18
@@ -220,6 +220,12 @@
       "url": "https://www.youtube.com/watch?v=bxuYDT-BWaI",
       "categoriaId": 6,
       "id": 33
+    },
+    {
+      "titulo": "Tixinha",
+      "url": "https://www.youtube.com/watch?v=DD01_XEbfUw",
+      "categoriaId": 5,
+      "id": 34
     }
   ]
 }

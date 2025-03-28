@@ -19,7 +19,7 @@ function CadastroCategoria() {
   useEffect(() => {
     const URL_TOP = window.location.hostname.includes("localhost")
       ? "http://localhost:8080/categorias"
-      : "https://vejoflix.herokuapp.com/categorias";
+      : "http://ec2-3-18-102-247.us-east-2.compute.amazonaws.com:8082/categorias";
 
     fetch(URL_TOP).then(async (respostaDoServidor) => {
       const resposta = await respostaDoServidor.json();
@@ -68,8 +68,8 @@ function CadastroCategoria() {
           };
 
           const URL_TOP = window.location.hostname.includes("localhost")
-            ? "http://localhost:8080/categorias"
-            : "https://vejoflix.herokuapp.com/categorias";
+            ? "http://localhost:8082"
+            : "http://localhost:8082";
 
           fetch(URL_TOP, {
             method: "POST",
