@@ -4,6 +4,9 @@ import PageDefault from "../../../components/PageDefault";
 import FormField from "../../../components/FormField";
 import Button from "../../../components/Button";
 import useForm from "../../../hooks/useForm.js";
+import dadosIniciaisJson from "../../../assets/DadosIniciais/dados-iniciais.json";
+
+const LOCAL_STORAGE_KEY = "vejoflixData";
 
 function CadastroCategoria() {
   const valoresIniciais = {
@@ -14,82 +17,78 @@ function CadastroCategoria() {
 
   const { handleChange, values, clearForm } = useForm(valoresIniciais);
 
-  const [categorias, setCategorias] = useState([]);
+  const [dadosIniciais, setDadosIniciais] = useState([]);
+
+  const categorias = dadosIniciais;
 
   useEffect(() => {
-    const URL_TOP = window.location.hostname.includes("localhost")
-      ? "http://localhost:8080/categorias"
-      : "https://ec2-3-18-102-247.us-east-2.compute.amazonaws.com:443/categorias";
+    try {
+      const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
 
-    fetch(URL_TOP).then(async (respostaDoServidor) => {
-      const resposta = await respostaDoServidor.json();
-      setCategorias([...resposta]);
-    });
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        if (Array.isArray(parsedData)) {
+          setDadosIniciais(parsedData);
+          return;
+        }
+      }
 
-    // setTimeout(() => {
-    //   setCategorias([
-    //     ...categorias,
-    //     {
-    //       id: 1,
-    //       nome: 'Front End',
-    //       descricao: 'Uma categoria bacanudassa',
-    //       cor: '#cbd1ff',
-    //     },
-    //     {
-    //       id: 2,
-    //       nome: 'Back End',
-    //       descricao: 'Outra categoria bacanudassa',
-    //       cor: '#cbd1ff',
-    //     },
-    //   ]);
-    // }, 4 * 1000);
+      setDadosIniciais(dadosIniciaisJson);
+      localStorage.setItem(
+        LOCAL_STORAGE_KEY,
+        JSON.stringify(dadosIniciaisJson)
+      );
+    } catch (error) {
+      console.error("❌ Erro ao carregar dados do Local Storage:", error);
+      setDadosIniciais(dadosIniciaisJson);
+    }
   }, []);
+
+  function handleNewCategorySubmission(infosDoEvento) {
+    infosDoEvento.preventDefault();
+
+    const maxId = dadosIniciais.reduce((max, categoria) => {
+      const currentId = Number(categoria.id);
+      if (!isNaN(currentId) && currentId > max) {
+        return currentId;
+      }
+      return max;
+    }, 0);
+
+    const novoId = maxId + 1;
+
+    const novaCategoria = {
+      id: novoId,
+      titulo: values.nome,
+      descricao: values.descricao,
+      cor: values.cor,
+      videos: [],
+      link_extra: {
+        text: values.nome,
+        url: "",
+      },
+    };
+
+    const novosDados = [...dadosIniciais, novaCategoria];
+
+    setDadosIniciais(novosDados);
+
+    try {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(novosDados));
+      clearForm();
+    } catch (error) {
+      console.error("❌ Erro ao salvar categoria no Local Storage:", error);
+      alert("Erro ao salvar a categoria no Local Storage.");
+    }
+  }
 
   return (
     <PageDefault>
       <h1>
-        Cadastro de Categoria:
-        {values.nome}
+        Cadastro de Categoria: **{values.nome}**
       </h1>
 
-      <form
-        onSubmit={function handleSubmit(infosDoEvento) {
-          infosDoEvento.preventDefault();
-
-          const novaCategoria = {
-            id: categorias.length + 1, // ou deixe o backend gerar
-            titulo: values.nome,
-            descricao: values.descricao,
-            cor: values.cor,
-            link_extra: {
-              text: "",
-              url: "",
-            },
-          };
-
-          const URL_TOP = window.location.hostname.includes("localhost")
-            ? "http://localhost:8082"
-            : "https://ec2-3-18-102-247.us-east-2.compute.amazonaws.com:443";
-
-          fetch(URL_TOP, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(novaCategoria),
-          }).then(async (respostaDoServidor) => {
-            if (respostaDoServidor.ok) {
-              const categoriaCriada = await respostaDoServidor.json();
-
-              setCategorias([...categorias, categoriaCriada]);
-
-              clearForm();
-            } else {
-              alert("Erro ao cadastrar categoria!");
-            }
-          });
-        }}
-      >
+      <form onSubmit={handleNewCategorySubmission}>
         <FormField
           label="Nome da Categoria"
           name="nome"
@@ -116,16 +115,17 @@ function CadastroCategoria() {
         <Button>Cadastrar</Button>
       </form>
 
-      {categorias.length === 0 && (
-        <div>
-          {/* Cargando... */}
-          Loading...
-        </div>
-      )}
+      {categorias.length === 0 && <div>Loading...</div>}
 
+      <h3>Categorias cadastradas:</h3>
       <ul>
         {categorias.map((categoria, index) => (
-          <li key={`${categoria.titulo}-${index}`}>{categoria.titulo}</li>
+          <li
+            key={`${categoria.titulo}-${index}`}
+            style={{ color: categoria.cor }}
+          >
+            {categoria.titulo}
+          </li>
         ))}
       </ul>
 
