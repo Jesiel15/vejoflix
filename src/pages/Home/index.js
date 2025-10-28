@@ -1,77 +1,76 @@
-/* eslint-disable no-console */
-import React, { useEffect, useState } from 'react';
-// import dadosIniciais from '../../data/dados_iniciais.json';
-import BannerMain from '../../components/BannerMain';
-import Carousel from '../../components/Carousel';
-import PageDefault from '../../components/PageDefault';
-import categoriasRepository from '../../repositories/categorias';
+import React, { useEffect, useState } from "react";
+import BannerMain from "../../components/BannerMain";
+import Carousel from "../../components/Carousel";
+import PageDefault from "../../components/PageDefault";
+import dadosIniciaisJson from "../../assets/DadosIniciais/dados-iniciais.json";
+
+const LOCAL_STORAGE_KEY = "vejoflixData";
 
 function Home() {
   const [dadosIniciais, setDadosIniciais] = useState([]);
 
   useEffect(() => {
-    // http://localhost:8080/categorias?_embed=videos
-    categoriasRepository.getAllWithVideos()
-      .then((categoriasComVideos) => {
-        console.log('-------categoriasComVideos', categoriasComVideos[0].videos[0]);
-        console.log('log',categoriasComVideos[0].videos[0]);
-        setDadosIniciais(categoriasComVideos);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    loadDadosIniciais();
   }, []);
+
+  function loadDadosIniciais() {
+    try {
+      const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+
+      if (storedData) {
+        console.log("🔄 Carregando categorias do Local Storage...");
+        const parsedData = JSON.parse(storedData);
+
+        if (Array.isArray(parsedData)) {
+          setDadosIniciais(parsedData);
+        } else {
+          console.warn(
+            "⚠️ Dados inválidos no Local Storage, recarregando JSON..."
+          );
+          loadFromJson();
+        }
+      } else {
+        loadFromJson();
+      }
+    } catch (error) {
+      console.error("❌ Erro ao ler dados do Local Storage:", error);
+      loadFromJson();
+    }
+  }
+
+  function loadFromJson() {
+    console.log(
+      "📦 Carregando categorias do arquivo JSON e salvando no Local Storage..."
+    );
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dadosIniciaisJson));
+    setDadosIniciais(dadosIniciaisJson);
+  }
 
   return (
     <PageDefault paddingAll={0}>
-      {dadosIniciais.length === 0 && (<div>Loading...</div>)}
+      {dadosIniciais.length === 0 && <div>Loading...</div>}
 
-      {dadosIniciais.map((categoria, indice) => {
-        if (indice === 0) {
-          return (
-            <div key={categoria.id}>
-              <BannerMain
-                videoTitle={dadosIniciais[0].videos[0].titulo}
-                url={dadosIniciais[0].videos[0].url}
-                videoDescription={dadosIniciais[0].videos[0].description}
-              />
-              <Carousel
-                ignoreFirstVideo
-                category={dadosIniciais[0]}
-              />
-            </div>
-          );
-        }
+      {Array.isArray(dadosIniciais) &&
+        dadosIniciais.map((categoria, indice) => {
+          if (!categoria?.videos || categoria.videos.length === 0) {
+            return null;
+          }
 
-        return (
-          <Carousel
-            key={categoria.id}
-            category={categoria}
-          />
-        );
-      })}
+          if (indice === 0) {
+            return (
+              <div key={categoria.id}>
+                <BannerMain
+                  videoTitle={categoria.videos[0].titulo || "Vídeo sem título"}
+                  url={categoria.videos[0].url}
+                  videoDescription={categoria.videos[0].descricao || ""}
+                />
+                <Carousel ignoreFirstVideo category={categoria} />
+              </div>
+            );
+          }
 
-      {/* <BannerMain
-        videoTitle={dadosIniciais.categorias[0].videos[0].titulo}
-        url={dadosIniciais.categorias[0].videos[0].url}
-        videoDescription="O que"
-      />
-      <Carousel
-        ignoreFirstVideo
-        category={dadosIniciais.categorias[0]}
-      />
-      <Carousel
-        category={dadosIniciais.categorias[1]}
-      />
-      <Carousel
-        category={dadosIniciais.categorias[2]}
-      />
-      <Carousel
-        category={dadosIniciais.categorias[3]}
-      />
-      <Carousel
-        category={dadosIniciais.categorias[4]}
-      /> */}
+          return <Carousel key={categoria.id} category={categoria} />;
+        })}
     </PageDefault>
   );
 }

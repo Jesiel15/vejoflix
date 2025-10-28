@@ -4,50 +4,86 @@ import PageDefault from "../../../components/PageDefault";
 import useForm from "../../../hooks/useForm";
 import FormField from "../../../components/FormField";
 import Button from "../../../components/Button";
-import videosRepository from "../../../repositories/videos";
-import categoriasRepository from "../../../repositories/categorias";
+const LOCAL_STORAGE_KEY = "vejoflixData";
 
 function CadastroVideo() {
   const history = useHistory();
   const [categorias, setCategorias] = useState([]);
   const categoryTitles = categorias.map(({ titulo }) => titulo);
-  const { handleChange, values } = useForm({
+  const { handleChange, values, clearForm } = useForm({
     titulo: "Video padrão",
-    url: "https://www.youtube.com/watch?v=Bh1398ddGDw",
+    url: "https://www.youtube.com/watch?v=iKRZ9j9leZw",
     categoria: "Front End",
   });
 
   useEffect(() => {
-    categoriasRepository.getAll().then((categoriasFromServer) => {
-      setCategorias(categoriasFromServer);
-    });
+    try {
+      const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        if (Array.isArray(parsedData)) {
+          setCategorias(parsedData);
+          return;
+        }
+      }
+    } catch (error) {
+      console.error("❌ Erro ao carregar dados do Local Storage:", error);
+    }
   }, []);
+  function handleVideoSubmission(event) {
+    event.preventDefault();
+
+    const newVideo = {
+      titulo: values.titulo,
+      url: values.url,
+      categoriaTitulo: values.categoria,
+    };
+
+    try {
+      const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+
+      if (!storedData) {
+        alert(
+          "Erro: Dados iniciais não encontrados no Local Storage. Visite a Home primeiro para carregar o JSON."
+        );
+        return;
+      }
+
+      let dados = JSON.parse(storedData);
+
+      const categoryToUpdate = dados.find(
+        (cat) => cat.titulo === newVideo.categoriaTitulo
+      );
+
+      if (categoryToUpdate) {
+        if (!categoryToUpdate.videos) {
+          categoryToUpdate.videos = [];
+        }
+
+        categoryToUpdate.videos.push({
+          titulo: newVideo.titulo,
+          url: newVideo.url,
+        });
+
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dados));
+
+        clearForm();
+        history.push("/");
+      } else {
+        alert(`Erro: Categoria '${newVideo.categoriaTitulo}' não encontrada.`);
+      }
+    } catch (error) {
+      console.error("Erro ao salvar dados no Local Storage:", error);
+      alert("Ocorreu um erro ao salvar o vídeo no Local Storage.");
+    }
+  }
 
   return (
     <PageDefault>
       <h1>Cadastro de Video</h1>
 
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          // alert('Video Cadastrado com sucesso!!!1!');
-
-          const categoriaEscolhida = categorias.find((categoria) => {
-            return categoria.titulo === values.categoria;
-          });
-
-          videosRepository
-            .create({
-              titulo: values.titulo,
-              url: values.url,
-              categoriaId: categoriaEscolhida.id,
-            })
-            .then(() => {
-              console.log("Cadastrou com sucesso!");
-              history.push("/");
-            });
-        }}
-      >
+      <form onSubmit={handleVideoSubmission}>
         <FormField
           label="Título do Vídeo"
           name="titulo"
@@ -61,7 +97,6 @@ function CadastroVideo() {
           value={values.url}
           onChange={handleChange}
         />
-
         <FormField
           label="Categoria"
           name="categoria"
@@ -78,12 +113,6 @@ function CadastroVideo() {
       <br />
 
       <Link to="/cadastro/categoria">Cadastrar Categoria</Link>
-
-      <br />
-      {/* 
-      <Link to="/delete/Video">
-        Deletar um video
-      </Link> */}
     </PageDefault>
   );
 }
